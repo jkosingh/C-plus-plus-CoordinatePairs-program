@@ -1,0 +1,338 @@
+
+#include <cstdlib>  //Includes abs()
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+#define MAX_ARRAY_LEN 100
+
+//A class for integer coordinate pairs in the (x,y) space
+class CoordinatePairs
+{
+public:
+        CoordinatePairs();
+        //Default Constructor
+        //Initializes (x1,y1) = (0,0) and (x2,y2) = (0,0)
+
+        CoordinatePairs(int in_x1, int in_y1, int in_x2, int in_y2);
+        //Constructor initializing all member values to input parameter values in
+        //the order x1, y1, x2, y2.
+
+        void set_pair1(int in_x1, int in_y1);
+        //Pre-condition:  Properly initialized CoordinatePair object.
+        //Post-condition: The values of (x1, y1) will be changed to the input parameter
+        //                values of this function.
+
+        void set_pair2(int in_x2, int in_y2);
+        //Pre-condition:  Properly initialized CoordinatePair object.
+        //Post-condition: The values of (x2, y2) will be changed to the input parameter
+        //                values of this function.
+
+        void get_pair1(int &out_x1, int &out_y1);
+        //Pre-condition:  Properly initialized CoordinatePair object.
+        //Post-condition: Call by Reference.
+        //                Let's the user read the values of (x1, y1) out into (out_x1, out_y1).
+
+        void get_pair2(int &out_x2, int &out_y2);
+        //Pre-condition:  Properly initialized CoordinatePair object.
+        //Post-condition: Call by Reference.
+        //                Let's the user read the values of (x2, y2) out into (out_x2, out_y2).
+
+        int calculate_manhattan_distance();
+        //Pre-condition:  Properly initialized CoordinatePair object.
+        //Post-condition: Returns the Manhattan distance between a pair of (x,y) coordinates,
+        //                equal to |x1-x2| + |y1-y2|. Google for more information.
+  //quicksort function
+    //WRITE ANY PUBLIC MEMBER FUNCTIONS YOU WANT TO USE HERE.
+    int getManhatt();
+    //For example, you might want to use these (but you don't have to):
+    friend ostream &operator<<(ostream &, CoordinatePairs &); // Created so we can print out the quicksort algorithm
+    //friend istream &operator>>(istream &, CoordinatePairs &); // Created so that we can cin the text from input files
+
+private:
+
+        int first;
+        int second;
+        int manhatt_array[];
+/*
+
+    WRITE ANY PRIVATE HELPER MEMBER FUNCTIONS YOU WANT TO USE HERE.
+
+*/
+
+        int x1;  //Coordinate pair 1: x value
+        int y1;  //Coordinate pair 1: y value
+        int x2;  //Coordinate pair 2: x value
+        int y2;  //Coordinate pair 2: y value
+
+};
+
+//////////////////CoordinatePairs Class Implementation ///////////////////////////
+    int partition (CoordinatePairs arr[], int low, int hi);
+
+    void swap (CoordinatePairs arr[], int i, int j);
+
+    void print_array(CoordinatePairs array[], int low, int hi);
+
+    void quick_sort(CoordinatePairs arr[], int low, int hi);
+//Default Constructor
+//Initializes (x1,y1) = (0,0) and (x2,y2) = (0,0)
+CoordinatePairs::CoordinatePairs()
+{
+        x1 = 0;
+        y1 = 0;
+        x2 = 0;
+        y2 = 0;
+}
+
+
+//Constructor initializing all member values to input parameter values in
+//the order x1, y1, x2, y2.
+CoordinatePairs::CoordinatePairs(int in_x1, int in_y1, int in_x2, int in_y2)
+{
+        x1 = in_x1;
+        y1 = in_y1;
+        x2 = in_x2;
+        y2 = in_y2;
+}
+
+//Pre-condition:  Properly initialized CoordinatePair object.
+//Post-condition: The values of (x1, y1) will be changed to the input parameter
+//                values of this function.
+void CoordinatePairs::set_pair1(int in_x1, int in_y1)
+{
+        x1 = in_x1;
+        y1 = in_y1;
+        return;
+}
+
+//Pre-condition:  Properly initialized CoordinatePair object.
+//Post-condition: The values of (x2, y2) will be changed to the input parameter
+//                values of this function.
+void CoordinatePairs::set_pair2(int in_x2, int in_y2)
+{
+        x2 = in_x2;
+        y2 = in_y2;
+        return;
+}
+
+
+//Pre-condition:  Properly initialized CoordinatePair object.
+//Post-condition: Call by Reference.
+//                Let's the user read the values of (x1, y1) out into (out_x1, out_y1).
+void CoordinatePairs::get_pair1(int &out_x1, int &out_y1)
+{
+        out_x1 = x1;
+        out_y1 = y1;
+        return;
+}
+
+
+//Pre-condition:  Properly initialized CoordinatePair object.
+//Post-condition: Call by Reference.
+//                Let's the user read the values of (x2, y2) out into (out_x2, out_y2).
+void CoordinatePairs::get_pair2(int &out_x2, int &out_y2)
+{
+        out_x2 = x2;
+        out_y2 = y2;
+        return;
+}
+
+
+//Pre-condition:  Properly initialized CoordinatePair object.
+//Post-condition: Returns the Manhattan distance between a pair of (x,y) coordinates,
+//                equal to |x1-x2| + |y1-y2|. Google for more information.
+int CoordinatePairs::calculate_manhattan_distance()
+{
+        return abs(x1-x2)+ abs(y1-y2); //abs() from cstdlib.
+}
+
+ostream &operator<<(ostream &output, CoordinatePairs &object)
+{
+        output<< object.calculate_manhattan_distance() << " ";
+        return output;
+}
+
+///TO GET YOU STARTED ON YOUR QUICK SORT ALGORITHM FOR THE COORDINATEPAIRS CLASS:////
+
+//Recall Prob2:
+//You might want a print_array function to help you with debugging.
+//NOTE: ONLY USE FOR DEBUGGING; DO NOT INCLUDE IN YOUR FINAL SUBMISSION.
+int CoordinatePairs:: getManhatt()
+{
+    return manhatt_array[MAX_ARRAY_LEN];
+}
+
+void print_array(CoordinatePairs array[], int low, int hi)
+{
+        cout<< "quick sort partition steps: ";
+        for (int j=low; j<=hi;j++)
+                cout << " "<< array[j];
+        cout << endl;
+}//end of print_array
+
+void swap (CoordinatePairs arr[], int i, int j)
+{
+    CoordinatePairs c;
+        c = arr[i];
+        arr[i] = arr[j];
+        arr[j] = c;
+        return;
+}
+int partition (CoordinatePairs arr[], int low, int hi)
+// You'll need the code for this function...
+{
+    int pivot = arr[hi].calculate_manhattan_distance();
+        int i = low;
+
+        for (int j = low; j<hi; j++)
+        {
+                if (arr[j].calculate_manhattan_distance() <= pivot)
+                {
+
+                        swap(arr, j, i );
+                        i++;
+
+                }
+
+    }
+    swap(arr, i, hi);
+        print_array(arr, low, hi);
+        return i;
+}
+
+void quick_sort(CoordinatePairs arr[], int low, int hi) //quicksort function
+{
+        int pivot;
+
+if (low < hi)
+        {
+            pivot = partition(arr, low, hi);
+                quick_sort(arr, low, pivot-1);
+                quick_sort(arr, pivot+1, hi);
+        }
+//
+        return;
+}
+
+
+int main()
+{
+        int num_pairs; //Number of objects initialized in the array
+    int file;
+    int n=0;
+        //Declare your CoordinatePairs Array here.
+        CoordinatePairs array[MAX_ARRAY_LEN];
+        CoordinatePairs print;
+        /*
+                        INSERT YOUR CODE HERE - TO READ THE NUMBERS FROM "input.txt" and store
+                        it in "array".  Count how many CoordinatePairs objects you initialized
+                        as you read in the values and store that value in num_pairs
+        */
+
+        ifstream myfile;
+        myfile.open("input.txt");
+        while(myfile>>file)
+        {
+        n++;
+        }
+        myfile.close();
+
+        myfile.open("input.txt");
+        int my_array[n];
+        int my_array1[n/4];
+        int my_array2[n/4];
+        int my_array3[n/4];
+        int my_array4[n/4];
+        int ii1=0;  // first column
+        int ii2=1; // second column
+        int ii3=2; // third column
+        int ii4=3; // fourth column
+        for (int i = 0; i < n; i++)
+        {
+            myfile >> my_array[i];
+        }
+
+        for (int i = 0; i < n/4; i++) // starts at adress 0 goes to 14th character because 14*4 = 68
+        {
+            my_array1[i] = my_array[ii1]; // create new array1 of 0+4+8+12... of the values at those memory locations size that is 14
+            ii1+=4; // so the 0 element of array1 is zero elment of my array, then first element of array1 is the 4th element of my array, and so on...
+        }
+               for (int i = 0; i < n/4; i++)
+        {
+            my_array2[i] = my_array[ii2];// create new array1 of 1+5+9+13... of the values at those memory locations size that is 14
+            ii2+=4;// so the 0 element of array2 is first elment of myarray, then first element of array2 is the 5th element of myarray, and so on..
+        }
+               for (int i = 0; i < n/4; i++)
+        {
+            my_array3[i] = my_array[ii3];
+            ii3+=4;
+        }
+               for (int i = 0; i < n/4; i++)
+        {
+            my_array4[i] = my_array[ii4];
+            ii4+=4;
+        }
+
+
+
+
+    int manhatt_array[n/4];
+    for (int i=0;i<n/4;i++)
+    {
+    array[i]=CoordinatePairs(my_array1[i],my_array2[i],my_array3[i],my_array4[i]); // iterates through all 14 rows now created
+    array[i].set_pair1(my_array1[i],my_array2[i]);
+    array[i].set_pair2(my_array3[i], my_array4[i]);
+    array[i].get_pair1(my_array1[i],my_array2[i]);
+    array[i].get_pair2(my_array3[i],my_array4[i]);
+    //cout<<my_array1[i]<<" "<<my_array2[i]<<" "<<my_array3[i]<<" "<<my_array4[i];// delivers arguments to constructor CoordinatePairs::CoordinatePairs(int in_x1, int in_y1, int in_x2, int in_y2)
+   // cout << " manhattan_distance "<<array[i].calculate_manhattan_distance()<<endl; // and then calls on function calculate manhatthan distance plugging in arguement for that.
+   // manhatt_array[i] = array[i].calculate_manhattan_distance();
+    //array[i] = manhatt_array[i];
+
+    }
+
+    for (int i=0;i<n/4;i++)
+    {
+    array[i].set_pair1(my_array1[i],my_array2[i]);
+    array[i].set_pair2(my_array3[i], my_array4[i]);
+    array[i].get_pair1(my_array1[i],my_array2[i]);
+    array[i].get_pair2(my_array3[i],my_array4[i]);
+   // print = array[i].calculate_manhattan_distance();
+    }
+
+       for (int i=0;i<n/4;i++)
+    {
+    cout<<array[i];
+    }
+
+ //   &farray=array;
+ //   cout<<farray;
+//for(int i = 0; i < n/4; i++)
+//{
+  //  quick_sort(array, 0, n/4);
+//}
+print_array(array,0,n/4-1);
+quick_sort(array, 0, n/4-1);
+print_array(array,0,n/4-1);
+
+
+        for (int i=0; i< n/4; i++)
+        {
+
+       // array[i].get_pair1(my_array1[i],my_array2[i]);
+       // array[i].get_pair2(my_array3[i],my_array4[i]);
+       // cout << my_array1[i] << endl << my_array2[i];
+        //cout << my_array3[i] << endl << my_array4[i];
+    //cout<<my_array1[i]<<" "<<my_array2[i]<<" "<<my_array3[i]<<" "<<my_array4[i];// delivers arguments to constructor CoordinatePairs::CoordinatePairs(int in_x1, int in_y1, int in_x2, int in_y2)
+    //cout << " manhattan_distance "<<array[i].calculate_manhattan_distance()<<endl;
+
+    }
+
+
+        return 0;
+}//end of main
+
+
+// int a,b;
+// array[i].getpairs1(a,b);
